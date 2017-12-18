@@ -2,8 +2,8 @@ package zookeeperProject.main;
 
 import java.awt.BorderLayout;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -33,7 +33,7 @@ public class WatcherWorker implements Watcher {
 				List<String> listOfMessage = null;
 				try {
 					listOfMessage = ZooContact.zoo.getChildren(event.getPath(), new WatcherWorker());
-					listOfMessage.sort(new StringComparator());
+					Collections.sort(listOfMessage,new StringComparator());
 				} catch (KeeperException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
@@ -46,9 +46,8 @@ public class WatcherWorker implements Watcher {
 					try {
 						for(int i =0 ;i<listOfMessage.size();i++) {
 							ByteContent = ZooContact.zoo.getData(event.getPath()+"/"+listOfMessage.get(i), false, null);
-							String content = new String(ByteContent,StandardCharsets.UTF_8);
-					    	System.out.println("Msg: "+content+" ; Receive at: " + (new Timestamp(System.currentTimeMillis())));
-				    	//ReceiveInterface.message_receive.append("   " + content+"\n");
+							String content = new String(ByteContent,"UTF-8");
+							ReceiveInterface.message_receive.append("   ("+new Timestamp(System.currentTimeMillis()) +") " + content+"\n");
 				    	
 				    	//ZooContact.zoo.delete("/queue/"+LoginDialog.ID.getText()+"/"+listOfMessage.get(0), -1)
 						}
@@ -86,7 +85,7 @@ public class WatcherWorker implements Watcher {
 					if(data.equals("1")) {
 						ZooContact.zoo.delete(event.getPath(), -1);
 						System.out.println("You've been registered successfully !");
-						//JOptionPane.showMessageDialog(null, "You've been registered successfully !", "Information", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "You've been registered successfully !", "Information", JOptionPane.INFORMATION_MESSAGE);
 				
 					}else if(data.equals("2")) {
 						ZooContact.zoo.delete(event.getPath(), -1);
@@ -104,11 +103,11 @@ public class WatcherWorker implements Watcher {
 					String data = new String(bdata, "UTF-8");
 					if(data.equals("1")) {
 						ZooContact.zoo.delete("/request/quit/"+LoginDialog.ID.getText(), -1);
-						//System.out.println("You've been registered successfully !");
-						//JOptionPane.showMessageDialog(null, "Your account has been removed successfully !", "Information", JOptionPane.INFORMATION_MESSAGE);
+						System.out.println("You've been registered successfully !");
+						JOptionPane.showMessageDialog(null, "Your account has been removed successfully !", "Information", JOptionPane.INFORMATION_MESSAGE);
 					}else if(data.equals("2")) {
 						ZooContact.zoo.delete("/request/quit/"+LoginDialog.ID.getText(), -1);
-						//JOptionPane.showMessageDialog(null, "You are not registered !", "Attention", JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null, "You are not registered !", "Attention", JOptionPane.WARNING_MESSAGE);
 					}else {
 						JOptionPane.showMessageDialog(null, "An error occured during quiting !", "Erreur", JOptionPane.ERROR_MESSAGE);
 					}
@@ -127,7 +126,7 @@ public class WatcherWorker implements Watcher {
 							List<String> listOfMessage = null;
 							try {
 								listOfMessage = ZooContact.zoo.getChildren("/queue/"+event.getPath().split("/")[2],false);
-								listOfMessage.sort(new StringComparator());
+								Collections.sort(listOfMessage,new StringComparator());
 							} catch (KeeperException e2) {
 								// TODO Auto-generated catch block
 								e2.printStackTrace();
@@ -140,7 +139,7 @@ public class WatcherWorker implements Watcher {
 								try {
 									for(String str:listOfMessage) {
 										ByteContent = ZooContact.zoo.getData("/queue/"+event.getPath().split("/")[2]+"/"+str, false, null);
-										String content = new String(ByteContent,StandardCharsets.UTF_8);
+										String content = new String(ByteContent,"UTF-8");
 								    	System.out.println(content);
 								    	ReceiveInterface.message_receive.append("   " + content+"\n");
 									}
@@ -157,8 +156,8 @@ public class WatcherWorker implements Watcher {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						//Client.log.setVisible(false);
-						//ReceiveInterface messInt =new ReceiveInterface(LoginDialog.zooContact);
+						Client.log.setVisible(false);
+						ReceiveInterface messInt =new ReceiveInterface(LoginDialog.zooContact);
 					}else if(data.equals("2")) {
 						JOptionPane.showMessageDialog(null, "You are not registered !", "Attention", JOptionPane.WARNING_MESSAGE);
 					}else {

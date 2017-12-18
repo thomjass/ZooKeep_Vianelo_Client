@@ -1,7 +1,7 @@
 package zookeeperProject.main;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -22,7 +22,7 @@ public class ZooContact {
 
 	   // Method to connect zookeeper ensemble.
 	   public ZooKeeper connect(String host) throws IOException,InterruptedException {	
-	      zoo = new ZooKeeper(host,5000,new WatcherWorker());
+	      zoo = new ZooKeeper(host,5000,new WatcherConn());
 	      return zoo;
 	   }
 		
@@ -74,7 +74,7 @@ public class ZooContact {
 	   public void goOnline(String ID) {
 	        // TODO Auto-generated method stub
 	        try {	
-	        		System.out.println("Client: ZooContact: Création de "+"/online/"+ID);
+	        		System.out.println("Client: ZooContact: Crï¿½ation de "+"/online/"+ID);
 	                zoo.create("/online/"+ID, "-1".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
 	        		System.out.println("Client: ZooContact: creation watcher qui peut trigger NodeDeleted or NodeDataChanged sur "+"/online/"+ID);
 	                zoo.getData("/online/"+ID, new WatcherWorker(), null);
@@ -121,7 +121,7 @@ public class ZooContact {
 	        return null;
 	    }
 	   
-	    public String readMessage(String ID, String MsgID) {
+	    public String readMessage(String ID, String MsgID) throws UnsupportedEncodingException {
 	        byte[] cryptmsg = null;
 	        try {
 	            cryptmsg = zoo.getData("/queue/"+ID+"/"+MsgID, new WatcherWorker(), null);
@@ -133,6 +133,6 @@ public class ZooContact {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
 	        }
-	        return new String(cryptmsg, StandardCharsets.UTF_8);
+	        return new String(cryptmsg, "UTF-8");
 	    }
 }

@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.swing.*;
@@ -22,6 +21,7 @@ public class ReceiveInterface {
 	public static JTextArea message_receive = new JTextArea();
 	public static JScrollPane scroller = new JScrollPane(message_receive, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	private ZooContact connexion;
+
 	public ReceiveInterface(final ZooContact connexion) {
 	    this.connexion = connexion;
 		
@@ -38,6 +38,7 @@ public class ReceiveInterface {
 					 for(String str:listOfMessageToSuppress) { 
 				    	  connexion.zoo.delete("/queue/"+LoginDialog.ID.getText()+"/"+str, -1);
 				   }
+				   message_receive.setText(null);
 				} catch (KeeperException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
