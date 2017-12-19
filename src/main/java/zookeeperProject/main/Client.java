@@ -18,7 +18,7 @@ public class Client {
 	public static void main(String[] args) {
 
 		try {
-			zk = conn.connect("localhost");
+			zk = conn.connect(args[0]);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

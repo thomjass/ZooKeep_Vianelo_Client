@@ -11,4 +11,35 @@
   		<version>3.4.10</version>
   	</dependency>
   </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.10</version>
+                <configuration>
+                    <platforms>
+                        <platform>unix</platform>
+                    </platforms>
+
+                    <programs>
+                        <program>
+                            <mainClass>zookeeperProject.main.Client</mainClass>
+                            <commandLineArguments>
+                                <commandLineArgument>url_kafka</commandLineArgument>
+                            </commandLineArguments>
+                            <id>client</id>
+                        </program>
+                        <program>
+                            <mainClass>zookeeperProject.main.Client_test</mainClass>
+                            <commandLineArguments>
+                                <commandLineArgument>url_kafka</commandLineArgument>
+                            </commandLineArguments>
+                            <id>client_test</id>
+                        </program>
+                    </programs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

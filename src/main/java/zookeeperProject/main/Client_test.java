@@ -17,7 +17,7 @@ public class Client_test {
 		for(int i=0;i<100;i++){
 			ZooContact conn = new ZooContact();
 			try {
-				zk = conn.connect("localhost");
+				zk = conn.connect(args[0]);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
