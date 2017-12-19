@@ -25,16 +25,10 @@
                     <programs>
                         <program>
                             <mainClass>zookeeperProject.main.Client</mainClass>
-                            <commandLineArguments>
-                                <commandLineArgument>url_kafka</commandLineArgument>
-                            </commandLineArguments>
                             <id>client</id>
                         </program>
                         <program>
                             <mainClass>zookeeperProject.main.Client_test</mainClass>
-                            <commandLineArguments>
-                                <commandLineArgument>url_kafka</commandLineArgument>
-                            </commandLineArguments>
                             <id>client_test</id>
                         </program>
                     </programs>
