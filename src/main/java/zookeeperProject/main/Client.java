@@ -14,7 +14,6 @@ public class Client {
 	private static ZooKeeper zk;
 	public static ZooContact conn = new ZooContact();
 	public static LoginDialog log;
-
 	public static void main(String[] args) {
 
 		try {

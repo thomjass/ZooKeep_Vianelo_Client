@@ -51,7 +51,7 @@ public class ReceiveInterface {
 	    
 	    JTabbedPane onglets = new JTabbedPane(SwingConstants.TOP);
 	    JScrollPane scroller = new JScrollPane(message_receive);
-	    scroller.setPreferredSize(new Dimension(800, 400));
+	    scroller.setPreferredSize(new Dimension(800, 390));
 	    onglet1.setPreferredSize(new Dimension(800, 400));
 	    onglet1.add(read, BorderLayout.NORTH);
 	    onglet1.add(scroller, BorderLayout.WEST);
